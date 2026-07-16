@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — Todo Manager</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="auth-wrapper">
+    <div class="auth-hero">
+        <div class="logo-mark"><img src="img/logo.jpeg" alt="Todo Manager logo"></div>
+        <h1>Join Todo Manager</h1>
+        <p>Create your account to start organizing tasks, tracking progress, and earning rewards for getting things done.</p>
+    </div>
+    <div class="auth-panel">
+        <div class="auth-card">
+            <h2>Register</h2>
+            <div class="form-error" id="errorBox"></div>
+
+            <form id="registerForm">
+                <div class="field">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Choose a username" required>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="password" placeholder="Create a password (min 6 characters)" minlength="6" required>
+                        <button type="button" class="toggle-eye" id="toggleEye">👁</button>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="Optional">
+                    </div>
+                    <div class="field">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" placeholder="e.g. India">
+                    </div>
+                    <div class="field">
+                        <label for="gender">Gender</label>
+                        <select id="gender">
+                            <option value="">Prefer not to say</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" id="registerBtn">Create Account</button>
+            </form>
+
+            <div class="auth-footer-link">
+                Already have an account? <a href="login.html">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    initThemeFromUser();
+
+    document.getElementById('toggleEye').addEventListener('click', () => {
+        const pw = document.getElementById('password');
+        pw.type = pw.type === 'password' ? 'text' : 'password';
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errorBox = document.getElementById('errorBox');
+        errorBox.classList.remove('show');
+        const btn = document.getElementById('registerBtn');
+        btn.disabled = true;
+        btn.textContent = 'Creating account...';
+
+        const payload = {
+            fullName: document.getElementById('fullName').value.trim(),
+            username: document.getElementById('username').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value,
+            phone: document.getElementById('phone').value.trim() || null,
+            dob: document.getElementById('dob').value || null,
+            country: document.getElementById('country').value.trim() || null,
+            gender: document.getElementById('gender').value || null
+        };
+
+        try {
+            const user = await apiRequest('/auth/register', {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            });
+            setCurrentUser(user);
+            window.location.href = 'dashboard.html';
+        } catch (err) {
+            errorBox.textContent = err.message;
+            errorBox.classList.add('show');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Create Account';
+        }
+    });
+</script>
+</body>
+</html>

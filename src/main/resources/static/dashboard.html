@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Todo Manager</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand"><img src="img/logo.jpeg" alt="Logo" class="brand-logo"> Todo Manager</div>
+        <nav>
+            <a href="dashboard.html" class="active"><span class="icon">🏠</span> Dashboard</a>
+            <a href="calendar.html"><span class="icon">📅</span> Calendar</a>
+            <a href="profile.html"><span class="icon">⭐</span> Profile</a>
+            <a href="#" id="categoriesLink"><span class="icon">📁</span> Categories</a>
+            <a href="#" id="settingsLink"><span class="icon">⚙️</span> Settings</a>
+        </nav>
+        <button class="btn-logout" id="logoutBtn">Logout</button>
+    </aside>
+
+    <main class="main">
+        <div class="main-header">
+            <h1 id="greeting">Hello 👋</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggleBtn" title="Toggle dark / light theme">🌙</button>
+                <button class="icon-btn" id="notifBtn">🔔<span class="notif-dot" id="notifDot"></span></button>
+                <button class="btn-add" id="addTaskBtn">+ Add Task</button>
+            </div>
+        </div>
+
+        <div class="notif-panel" id="notifPanel"></div>
+
+        <div class="quote-banner">"Stay focused and never stop learning."</div>
+
+        <div class="stats-grid">
+            <div class="stat-card"><div class="label">Total Tasks</div><div class="value" id="statTotal">0</div></div>
+            <div class="stat-card completed"><div class="label">Completed</div><div class="value" id="statCompleted">0</div></div>
+            <div class="stat-card pending"><div class="label">Pending</div><div class="value" id="statPending">0</div></div>
+            <div class="stat-card"><div class="label">Reward Points</div><div class="value" id="statRewardPoints">0</div></div>
+        </div>
+
+        <div class="panel">
+            <h3>Today's Progress</h3>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="panel">
+            <h3>Rewards, Badges &amp; Stickers</h3>
+            <div class="rewards-row">
+                <div class="reward-chip"><div class="emoji">⭐</div><div class="num" id="rewardPoints">0</div><div class="lbl">Points Earned</div></div>
+                <div class="reward-chip"><div class="emoji">🏅</div><div class="num" id="badgeCount">0</div><div class="lbl">Badges Earned</div></div>
+                <div class="reward-chip"><div class="emoji">🎟️</div><div class="num" id="stickerCount">0</div><div class="lbl">Stickers Earned</div></div>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search Tasks...">
+            <select class="filter-select" id="filterSelect">
+                <option value="All">All Tasks</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+                <option value="High">High Priority</option>
+                <option value="Medium">Medium Priority</option>
+                <option value="Low">Low Priority</option>
+            </select>
+        </div>
+
+        <div class="task-list" id="taskList"></div>
+    </main>
+</div>
+
+<!-- Add / Edit Task Modal -->
+<div class="modal-overlay" id="taskModalOverlay">
+    <div class="modal">
+        <h2 id="modalTitle">Add Task</h2>
+        <div class="form-error" id="taskErrorBox"></div>
+        <form id="taskForm">
+            <input type="hidden" id="taskId">
+            <div class="field">
+                <label for="taskTitle">Title</label>
+                <input type="text" id="taskTitle" placeholder="e.g. Finish project report" required>
+            </div>
+            <div class="field">
+                <label for="taskDescription">Description</label>
+                <input type="text" id="taskDescription" placeholder="Optional details">
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label for="taskCategory">Category</label>
+                    <input type="text" id="taskCategory" placeholder="e.g. Work, Study">
+                </div>
+                <div class="field">
+                    <label for="taskPriority">Priority</label>
+                    <select id="taskPriority">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label for="taskDueDate">Due Date</label>
+                    <input type="date" id="taskDueDate">
+                </div>
+                <div class="field">
+                    <label for="taskDueTime">Due Time</label>
+                    <input type="time" id="taskDueTime">
+                </div>
+            </div>
+            <div class="field">
+                <label for="taskReminder">Remind me before (minutes)</label>
+                <input type="number" id="taskReminder" value="15" min="0">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="cancelTaskBtn">Cancel</button>
+                <button type="submit" class="btn-primary" id="saveTaskBtn">Save Task</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Todo Manager</title>
+<script>
+    // Entry point: send logged-in users to the dashboard, everyone else to login.
+    const raw = localStorage.getItem('todo_user');
+    window.location.replace(raw ? 'dashboard.html' : 'login.html');
+</script>
+</head>
+<body>
+</body>
+</html>
